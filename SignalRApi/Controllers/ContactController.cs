@@ -40,19 +40,19 @@ namespace SignalRApı.Controllers
             });
             return Ok("Contact eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteContact(int id)
         {
             var value = _contactService.TGetByID(id);
             _contactService.TDelete(value);
             return Ok("Contact silindi");
         }
-        [HttpGet("Get contact")]
+        [HttpGet("{id}")]
         public IActionResult GetContact(int id)
         {
             return Ok(_contactService.TGetByID(id));
         }
-        [HttpPost("Update")]
+        [HttpPut]
         public IActionResult UpdateContact(UpdateContactDto var)
         {
             _contactService.TUpdate(new Contact()

@@ -38,19 +38,19 @@ namespace SignalRApı.Controllers
             });
             return Ok("discount eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteDiscount(int id)
         {
             var value = _discountService.TGetByID(id);
             _discountService.TDelete(value);
             return Ok("discount silindi");
         }
-        [HttpGet("Get Discount")]
+        [HttpGet("{id}")]
         public IActionResult GetDiscount(int id)
         {
             return Ok(_discountService.TGetByID(id));
         }
-        [HttpPost("Update")]
+        [HttpPut]
         public IActionResult UpdateDiscount(UpdateDiscountDto var)
         {
             _discountService.TUpdate(new Discount()

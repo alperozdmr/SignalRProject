@@ -16,7 +16,7 @@ namespace SignalRApı.Controllers
         {
             _bookingService = bookingService;
         }
-        [HttpPost]
+        [HttpGet]
         [Route("List")]
         public IActionResult BookingList() {
             var values = _bookingService.TGetListAll();
@@ -37,16 +37,15 @@ namespace SignalRApı.Controllers
             _bookingService.TAdd(booking);
             return Ok("Rezervasyon yapıldı");
         }
-        [HttpPost]
-        [Route("Delete")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteBooking(int id)
         {
             var value = _bookingService.TGetByID(id);
             _bookingService.TDelete(value);
             return Ok("Rezervasyon silindi");
         }
-        [HttpPost]
-        [Route("Update")]
+        [HttpPut]
+        //[Route("Update")]
         public IActionResult UpdateBooking(UpdateBookingDto var)
         {
             Booking booking = new Booking
@@ -61,8 +60,8 @@ namespace SignalRApı.Controllers
             _bookingService.TUpdate(booking);
             return Ok("Rezervasyon güncellendi");
         }
-        [HttpPost]
-        [Route("Get")]
+        [HttpGet("{id}")]
+        //[Route("Get")]
         public IActionResult GetBooking(int id)
         {
             var value = _bookingService.TGetByID(id);

@@ -37,19 +37,19 @@ namespace SignalRApı.Controllers
             });
             return Ok("sosyal medya eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteSocialMedia(int id)
         {
             var value = _socialMediaService.TGetByID(id);
             _socialMediaService.TDelete(value);
             return Ok("Sosyal Medya silindi");
         }
-        [HttpGet("Get SocialMedia")]
+        [HttpGet("{id}")]
         public IActionResult GetSocialMedia(int id)
         {
             return Ok(_socialMediaService.TGetByID(id));
         }
-        [HttpPost("Update")]
+        [HttpPut]
         public IActionResult UpdateSocialMedia(UpdateSocialMediaDto var)
         {
             _socialMediaService.TUpdate(new SocialMedia()

@@ -40,19 +40,19 @@ namespace SignalRApı.Controllers
             });
             return Ok("kategori eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteFeature(int id)
         {
             var value = _featureService.TGetByID(id);
             _featureService.TDelete(value);
             return Ok("Kategori silindi");
         }
-        [HttpGet("Get Feature")]
+        [HttpGet("{id}")]
         public IActionResult GetFeature(int id)
         {
             return Ok(_featureService.TGetByID(id));
         }
-        [HttpPost("Update")]
+        [HttpPut]
         public IActionResult UpdateFeature(UpdateFeatureDto var)
         {
             _featureService.TUpdate(new Feature()
