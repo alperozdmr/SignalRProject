@@ -1,4 +1,6 @@
-﻿namespace SignalR.EntityLayer
+﻿using SignalR.EntityLayer.Entities;
+
+namespace SignalR.EntityLayer
 {
     public class Product
     {
@@ -11,5 +13,6 @@
 
         public int CategoryID { get; set; }
         public Category Category { get; set; }
+        public List<OrderDetail> Details { get; set; }
     }
 }
