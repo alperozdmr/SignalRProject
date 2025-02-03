@@ -30,7 +30,7 @@ builder.Services.AddScoped<IBookingService, BookingManager>();
 builder.Services.AddScoped<IBookingDal, EfBookingDal>();
 
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
-builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+builder.Services.AddScoped<ICategorySErvice, EfCategoryDal>();
 
 builder.Services.AddScoped<IContactService, ContactManager>();
 builder.Services.AddScoped<IContactDal, EfContactDal>();
@@ -53,8 +53,17 @@ builder.Services.AddScoped<ITestimonialDal, EfTestimonialDal>();
 builder.Services.AddScoped<IOrderDetailService, OrderDetailManager>();
 builder.Services.AddScoped<IOrderDetailDal, EfOrderDetailDal>();
 
-builder.Services.AddScoped<IOrderSevice, OrderManager>();
+builder.Services.AddScoped<IOrderService, OrderManager>();
 builder.Services.AddScoped<IOrderDal, EfOrderDal>();
+
+builder.Services.AddScoped<IMoneyCaseService, MoneyCaseManager>();
+builder.Services.AddScoped<IMoneyCaseDal, EfMoneyCaseDal>();
+
+builder.Services.AddScoped<IMenuTableService, MenuTableManager>();
+builder.Services.AddScoped<IMenuTableDal, EfMenuTableDal>();
+
+builder.Services.AddScoped<ISliderService, SliderManager>();
+builder.Services.AddScoped<ISliderDal, EfSliderDal>();
 
 
 

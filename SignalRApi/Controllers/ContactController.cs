@@ -37,6 +37,10 @@ namespace SignalRApı.Controllers
                 Mail=var.Mail,
                 FooterDescription=var.FooterDescription,
                 Location=var.Location,
+                FooterTitle=var.FooterTitle,
+                OpenDay=var.OpenDay,
+                OpenDaysDescription=var.OpenDaysDescription,
+                OpenHour=var.OpenHour
             });
             return Ok("Contact eklendi");
         }
@@ -62,7 +66,11 @@ namespace SignalRApı.Controllers
                 Mail = var.Mail,
                 FooterDescription = var.FooterDescription,
                 Location = var.Location,
-            });
+				FooterTitle = var.FooterTitle,
+				OpenDay = var.OpenDay,
+				OpenDaysDescription = var.OpenDaysDescription,
+				OpenHour = var.OpenHour
+			});
             return Ok("Contact güncellendi");
         }
     }

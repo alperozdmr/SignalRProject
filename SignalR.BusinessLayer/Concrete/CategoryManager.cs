@@ -11,9 +11,9 @@ namespace SignalR.BusinessLayer.Concrete
 {
     public class CategoryManager : ICategoryService
     {
-        private readonly ICategoryDal _categoryDal;
+        private readonly ICategorySErvice _categoryDal;
 
-        public CategoryManager(ICategoryDal categoryDal)
+        public CategoryManager(ICategorySErvice categoryDal)
         {
             _categoryDal = categoryDal;
         }

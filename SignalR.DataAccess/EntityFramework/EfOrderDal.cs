@@ -15,5 +15,36 @@ namespace SignalR.DataAccess.EntityFramework
 		public EfOrderDal(SignalRContext context) : base(context)
 		{
 		}
+
+		public int ActiveOrderCount()
+		{
+			using var context = new SignalRContext();	
+			return context.Orders.Where(x=>x.Description == "Müşteri Masada").Count();
+		}
+
+		public int ActiveOrderCountByStatus()
+		{
+			using var context = new SignalRContext();
+			return context.Orders.Where(x => x.OrderStatus == true).Count();
+		}
+
+		public decimal LastOrderPrice()
+		{
+			using var context = new SignalRContext();	
+			return context.Orders.OrderByDescending(x=>x.OrderID).Take(1).Select(y=>y.TotalPrice).FirstOrDefault();
+		}
+
+		public decimal TodayTotalPrice()
+		{
+			using var context = new SignalRContext();
+			return context.Orders.Where(x => x.OrderDate == DateTime.Today).Sum(y => y.TotalPrice);
+			
+		}
+
+		public int TotalOrderCount()
+		{
+			using var context = new SignalRContext();
+			return context.Orders.Count();
+		}
 	}
 }

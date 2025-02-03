@@ -9,5 +9,10 @@ namespace SignalR.DataAccess.Abstract
 {
 	public interface IOrderDal : IGenericDal<Order>
 	{
+		int TotalOrderCount();
+		int ActiveOrderCount();
+		int ActiveOrderCountByStatus();
+		decimal LastOrderPrice();
+		decimal TodayTotalPrice();
 	}
 }
