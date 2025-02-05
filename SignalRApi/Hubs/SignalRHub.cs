@@ -12,18 +12,19 @@ namespace SignalRApı.Hubs
 		private readonly IOrderService _orderService;
 		private readonly IMoneyCaseService _moneyCaseService;
 		private readonly IMenuTableService _menuTableService;
-		//private readonly IBookingService _bookingService;
-		//private readonly INotificationService _notificationService;
-		public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IMenuTableService menuTableService)
-		{
-			_categoryService = categoryService;
-			_productService = productService;
-			_orderService = orderService;
-			_moneyCaseService = moneyCaseService;
-			_menuTableService = menuTableService;
-		}
+		private readonly IBookingService _bookingService;
+        //private readonly INotificationService _notificationService;
+        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IMenuTableService menuTableService, IBookingService bookingService)
+        {
+            _categoryService = categoryService;
+            _productService = productService;
+            _orderService = orderService;
+            _moneyCaseService = moneyCaseService;
+            _menuTableService = menuTableService;
+            _bookingService = bookingService;
+        }
 
-		public async Task SendStatistic()
+        public async Task SendStatistic()
 		{
 			var value = _categoryService.TCategoryCount();
 			await Clients.All.SendAsync("ReceiveCategoryCount",value);
@@ -106,6 +107,40 @@ namespace SignalRApı.Hubs
 			//var value11 = _productService.TTotalPriceBySaladCategory();
 			//await Clients.All.SendAsync("ReceiveTotalPriceBySaladCategory", value11);
 		}
+        public async Task GetBookingList()
+        {
+            var values = _bookingService.TGetListAll();
+            await Clients.All.SendAsync("ReceiveBookingList", values);
+        }
+        //public async Task SendNotification()
+        //{
+        //    var value = _notificationService.TNotificationCountByStatusFalse();
+        //    await Clients.All.SendAsync("ReceiveNotificationCountByFalse", value);
 
-	}
+        //    var notificationListByFalse = _notificationService.TGetAllNotificationByFalse();
+        //    await Clients.All.SendAsync("ReceiveNotificationListByFalse", notificationListByFalse);
+        //}
+        //public async Task GetMenuTableStatus()
+        //{
+        //    var value = _menuTableService.TGetListAll();
+        //    await Clients.All.SendAsync("ReceiveMenuTableStatus", value);
+        //}
+        //public async Task SendMessage(string user, string message)
+        //{
+        //    await Clients.All.SendAsync("ReceiveMessage", user, message);
+        //}
+        //public override async Task OnConnectedAsync()
+        //{
+        //    clientCount++;
+        //    await Clients.All.SendAsync("ReceiveClientCount", clientCount);
+        //    await base.OnConnectedAsync();
+        //}
+        //public override async Task OnDisconnectedAsync(Exception? exception)
+        //{
+        //    clientCount--;
+        //    await Clients.All.SendAsync("ReceiveClientCount", clientCount);
+        //    await base.OnDisconnectedAsync(exception);
+        //}
+
+    }
 }
