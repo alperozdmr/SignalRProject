@@ -33,6 +33,7 @@ namespace SignalRApı.Controllers
                 Name = var.Name,
                 PersonCount = var.PersonCount,
                 Phone = var.Phone,
+                Description = var.Description,
             };
             _bookingService.TAdd(booking);
             return Ok("Rezervasyon yapıldı");
@@ -56,6 +57,7 @@ namespace SignalRApı.Controllers
                 Name = var.Name,
                 PersonCount = var.PersonCount,
                 Phone = var.Phone,
+                Description= var.Description,   
             };
             _bookingService.TUpdate(booking);
             return Ok("Rezervasyon güncellendi");
@@ -67,5 +69,17 @@ namespace SignalRApı.Controllers
             var value = _bookingService.TGetByID(id);
             return Ok(value);   
         }
-    }
+		[HttpGet("BookingStatusApproved/{id}")]
+		public IActionResult BookingStatusApproved(int id)
+		{
+			_bookingService.BookingStatusApproved(id);
+			return Ok("Rezervasyon Açıklaması Değiştirildi");
+		}
+		[HttpGet("BookingStatusCancelled/{id}")]
+		public IActionResult BookingStatusCancelled(int id)
+		{
+			_bookingService.BookingStatusCancelled(id);
+			return Ok("Rezervasyon Açıklaması Değiştirildi");
+		}
+	}
 }

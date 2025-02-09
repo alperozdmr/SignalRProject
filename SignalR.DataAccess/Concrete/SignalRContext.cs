@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SignalR.EntityLayer;
 using SignalR.EntityLayer.Entities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SignalR.DataAccess.Concrete
 {
-    public class SignalRContext:DbContext   
+    public class SignalRContext:IdentityDbContext<AppUser,AppRole,int>   
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,6 +32,7 @@ namespace SignalR.DataAccess.Concrete
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
     }
 }

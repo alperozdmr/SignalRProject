@@ -1,6 +1,6 @@
-﻿@model SignalRWebUI.Dtos.FeatureDtos.UpdateFeatureDto
+﻿@model SignalRWebUI.Dtos.SliderDtos.CreateSliderDto
 @{
-    ViewData["Title"] = "UpdateFeature";
+    ViewData["Title"] = "CreateFeature";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
@@ -14,7 +14,6 @@
 						<div class="card-header">
 							<div class="card-title">Yeni Öne Çıkan Alan Girişi</div>
 						</div>
-						<input type="hidden" asp-for="FeatureID"/>
 						<div class="card-body">
 							<div class="form-group">
 								<label for="Title1">1. Başlığı Giriniz</label>
@@ -57,7 +56,7 @@
 							</div>
 
 						</div>
-
+					
 						<div class="card-action">
 							<button class="btn btn-primary">Öne Çıkan Alan ekle</button>
 						</div>
@@ -67,4 +66,5 @@
 		</div>
 	</div>
 </div>
+
 

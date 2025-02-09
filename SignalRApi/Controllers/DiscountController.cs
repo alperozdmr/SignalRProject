@@ -35,6 +35,7 @@ namespace SignalRApı.Controllers
                Description = var.Description,
                ImageUrl = var.ImageUrl,
                Title = var.Title,
+               Status = var.Status,
             });
             return Ok("discount eklendi");
         }
@@ -60,8 +61,21 @@ namespace SignalRApı.Controllers
                 Description = var.Description,
                 ImageUrl = var.ImageUrl,
                 Title = var.Title,
+                Status = false,    
             });
             return Ok("discount güncellendi");
         }
-    }
+        [HttpGet("ChangeStatusToTrue/{id}")]
+		public IActionResult ChangeStatusToTrue(int id)
+        {
+            _discountService.TChangeStatusToTrue(id);
+            return Ok("durrum değiştirildi");
+        }
+        [HttpGet("ChangeStatusToFalse/{id}")]
+		public IActionResult ChangeStatusToFalse(int id)
+        {
+            _discountService.TChangeStatusToFalse(id);
+			return Ok("durrum değiştirildi");
+		}
+	}
 }
