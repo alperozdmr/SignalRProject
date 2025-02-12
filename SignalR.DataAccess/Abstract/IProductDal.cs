@@ -17,5 +17,9 @@ namespace SignalR.DataAccess.Abstract
         string ProductNameByMaxPrice();
         string ProductNameByMinPrice();
         decimal ProductPriceByHamburger();
+        decimal ProductPriceBySteakBurger();
+        decimal TotalPriceByDrinkCategory();
+        decimal TotalPriceBySaladCategory();
+        List<Product> GetLast9Products();
 	}
 }

@@ -29,14 +29,7 @@ namespace SignalRApı.Controllers
         [HttpPost]
         public IActionResult CreateTestimonial(CreateTestimonialDto var)
         {
-            _testimonialService.TAdd(new Testimonial()
-            {
-                Comment = var.Comment,
-                ImageUrl = var.ImageUrl,
-                Name = var.Name,
-                Status = var.Status,
-                Title = var.Title,
-            });
+            _testimonialService.TAdd(_mapper.Map<Testimonial>(var));
             return Ok("testimonial eklendi");
         }
         [HttpDelete("{id}")]
@@ -54,15 +47,7 @@ namespace SignalRApı.Controllers
         [HttpPut]
         public IActionResult UpdateTestimonial(UpdateTestimonialDto var)
         {
-            _testimonialService.TUpdate(new Testimonial()
-            {
-                TestimonialID = var.TestimonialID,
-                Comment = var.Comment,
-                ImageUrl = var.ImageUrl,
-                Name = var.Name,
-                Status = var.Status,
-                Title = var.Title,
-            });
+            _testimonialService.TUpdate(_mapper.Map<Testimonial>(var));
             return Ok("testimonial güncellendi");
         }
     }

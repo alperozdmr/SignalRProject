@@ -31,17 +31,7 @@ namespace SignalRApı.Controllers
         [HttpPost]
         public IActionResult CreateContact(CreateContactDto var)
         {
-            _contactService.TAdd(new Contact()
-            {
-                Phone=var.Phone,    
-                Mail=var.Mail,
-                FooterDescription=var.FooterDescription,
-                Location=var.Location,
-                FooterTitle=var.FooterTitle,
-                OpenDay=var.OpenDay,
-                OpenDaysDescription=var.OpenDaysDescription,
-                OpenHour=var.OpenHour
-            });
+            _contactService.TAdd(_mapper.Map<Contact>(var));
             return Ok("Contact eklendi");
         }
         [HttpDelete("{id}")]
@@ -54,23 +44,13 @@ namespace SignalRApı.Controllers
         [HttpGet("{id}")]
         public IActionResult GetContact(int id)
         {
-            return Ok(_contactService.TGetByID(id));
+            var value = _contactService.TGetByID(id);
+			return Ok(_mapper.Map<GetContactDto>(value));
         }
         [HttpPut]
         public IActionResult UpdateContact(UpdateContactDto var)
         {
-            _contactService.TUpdate(new Contact()
-            {
-                ContactId=var.ContactId,
-                Phone = var.Phone,
-                Mail = var.Mail,
-                FooterDescription = var.FooterDescription,
-                Location = var.Location,
-				FooterTitle = var.FooterTitle,
-				OpenDay = var.OpenDay,
-				OpenDaysDescription = var.OpenDaysDescription,
-				OpenHour = var.OpenHour
-			});
+            _contactService.TUpdate(_mapper.Map<Contact>(var));
             return Ok("Contact güncellendi");
         }
     }

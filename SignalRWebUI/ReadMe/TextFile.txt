@@ -1,0 +1,40 @@
+﻿BENİM ORDERIMDA ORDER STATUS ADINDA BİR BOOL DEĞİŞKEN VAR NORMALDE DESCİPTİONDA YAZAN 
+"HESAP KAPATILDI" VEYA "MÜŞTERİ MASADA" GİBİ YAZILAR YERİNDE MONEYCASE DEKİ TOTALAMOUNT
+SQL ÜZERİNDEN ORDERDAKİ BOOLEN DEĞERE GÖRE HESAPLANIYOR İLERİDE SORUN ÇIKARSA ONU DEĞİŞTİR
+
+
+BU PROJEDEKİ SİGNALR ÇALIŞMA MANTIĞI APİ DEKİ SİGNALRHUB DAN GELEN VERİLERİ ÇEKMESİYLE ÇALIŞIYOR 
+$(document).ready(() => {
+
+					var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7110/SignalRHub").build();
+					$("#connstatus").text(connection.state);
+
+
+					connection.start().then(() => {
+						$("#connstatus").text(connection.state);
+						setInterval(() => {
+							connection.invoke("SendStatistic");
+						}, 1000);
+
+					}).catch((err) => { console.log(err) });
+
+STATİSTİC INDEXİNDEKİ BU SCRİPT SİGNALR İÇİN BAĞLANTI KURMASINI SAĞLIYOR "SendStatistic" BU İFADE SİGNARHUB DAKİ HANGİ 
+METODU KULLLANICIĞINI BELİRTİRKEN 
+connection.on("ReceiveCategoryCount", (value) => {
+						$("#categorycount").text(value);
+					});
+
+BURDAKİ İFADEDE VERİYİ ÇEKMEYE YARIYOR. VERİYİ YA TEXT ŞEKLİNDE YADA HTML FORMATINDA ÇEKEBİLİRSİN
+	connection.on("ReceiveMenuTableCount", (value4) => {
+					$("#totalMenuTableCountProgress").empty();
+					$("#totalMenuTableCountProgress").append(`
+						<div class="d-flex justify-content-between mb-1">
+						<span class="text-muted">Toplam Masa Sayısı</span>
+						<span class="text-muted fw-bold">${value4}</span>
+						</div>
+						<div class="progress mb-2" style="height: 7px;">
+						<div class="progress-bar bg-success" role="progressbar" style="width: ${value4}%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${value4}%"></div>
+						</div>                              
+				`)
+				});
+BURDA GÖRÜLDÜĞÜ GİBİ.

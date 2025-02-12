@@ -70,15 +70,8 @@ namespace SignalRApı.Controllers
 		[HttpPost]
         public IActionResult CreateProduct(CreateProductDto var)
         {
-            _productService.TAdd(new Product()
-            {
-               Price = var.Price,
-               ProductName = var.ProductName,
-               ProductStatus = true,
-               Description = var.Description,
-               ImageUrl = var.ImageUrl,
-               CategoryID = var.CategoryID,
-            });
+            var.ProductStatus = true;
+            _productService.TAdd(_mapper.Map<Product>(var));
             return Ok("ürüm eklendi");
         }
         [HttpDelete("{id}")]
@@ -96,17 +89,14 @@ namespace SignalRApı.Controllers
         [HttpPut]
         public IActionResult UpdateProduct(UpdateProductDto var)
         {
-            _productService.TUpdate(new Product()
-            {
-                ProductID = var.ProductID,
-                Price = var.Price,
-                ProductName = var.ProductName,
-                ProductStatus = var.ProductStatus,
-                Description = var.Description,
-                ImageUrl = var.ImageUrl,
-                CategoryID = var.CategoryID,
-            });
+            _productService.TUpdate(_mapper.Map<Product>(var));
             return Ok("ürün güncellendi");
         }
-    }
+		[HttpGet("GetLast9Products")]
+		public IActionResult GetLast9Products()
+		{
+			var values = _mapper.Map<List<ResultProductDto>>(_productService.TGetLast9Products());
+			return Ok(values);
+		}
+	}
 }

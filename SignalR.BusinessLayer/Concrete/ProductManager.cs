@@ -33,7 +33,12 @@ namespace SignalR.BusinessLayer.Concrete
             return _productDal.GetByID(id);
         }
 
-        public List<Product> TGetListAll()
+		public List<Product> TGetLast9Products()
+		{
+			return _productDal.GetLast9Products();
+		}
+
+		public List<Product> TGetListAll()
         {
             return _productDal.GetListAll();
         }
@@ -75,6 +80,21 @@ namespace SignalR.BusinessLayer.Concrete
 		public decimal TProductPriceByHamburger()
 		{
 			return _productDal.ProductPriceByHamburger();
+		}
+
+		public decimal TProductPriceBySteakBurger()
+		{
+			return _productDal.ProductPriceBySteakBurger();
+		}
+
+		public decimal TTotalPriceByDrinkCategory()
+		{
+			return _productDal.TotalPriceByDrinkCategory();
+		}
+
+		public decimal TTotalPriceBySaladCategory()
+		{
+           return  _productDal.TotalPriceBySaladCategory();
 		}
 
 		public void TUpdate(Product entity)

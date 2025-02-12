@@ -17,7 +17,14 @@ namespace SignalR.DataAccess.EntityFramework
         {
         }
 
-        public List<Product> GetProductsWithCategories()
+		public List<Product> GetLast9Products()
+		{
+			using var context = new SignalRContext();
+			var values = context.Products.Take(9).ToList();
+			return values;
+		}
+
+		public List<Product> GetProductsWithCategories()
         {
            SignalRContext context = new SignalRContext();
             var values = context.Products.Include(x=> x.Category).ToList();
@@ -66,6 +73,26 @@ namespace SignalR.DataAccess.EntityFramework
 		{
 			using var context = new SignalRContext();
 			return context.Products.Where(x => x.CategoryID == (context.Categories.Where(y => y.Name == "Hamburger").Select(z => z.CategoryID).FirstOrDefault())).Average(w=>w.Price);
+		}
+
+		public decimal ProductPriceBySteakBurger()
+		{
+			using var context = new SignalRContext();
+			return context.Products.Where(x => x.ProductName == "Steak Burger").Select(x => x.Price).FirstOrDefault();
+		}
+
+		public decimal TotalPriceByDrinkCategory()
+		{
+			using var context = new SignalRContext();
+			int id = context.Categories.Where(x => x.Name == "İçecek").Select(y=>y.CategoryID).FirstOrDefault();
+			return context.Products.Where(z => z.CategoryID == id).Sum(c=>c.Price);
+		}
+
+		public decimal TotalPriceBySaladCategory()
+		{
+			using var context = new SignalRContext();
+			int id = context.Categories.Where(x => x.Name == "Salata").Select(y => y.CategoryID).FirstOrDefault();
+			return context.Products.Where(z => z.CategoryID == id).Sum(c => c.Price);
 		}
 	}
 }

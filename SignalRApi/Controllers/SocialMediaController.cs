@@ -29,12 +29,7 @@ namespace SignalRApı.Controllers
         [HttpPost]
         public IActionResult CreateSocialMedia(CreateSocialMediaDto var)
         {
-            _socialMediaService.TAdd(new SocialMedia()
-            {
-               Icon = var.Icon,
-               Title = var.Title,
-               Url = var.Url
-            });
+            _socialMediaService.TAdd(_mapper.Map<SocialMedia>(var));
             return Ok("sosyal medya eklendi");
         }
         [HttpDelete("{id}")]
@@ -52,13 +47,7 @@ namespace SignalRApı.Controllers
         [HttpPut]
         public IActionResult UpdateSocialMedia(UpdateSocialMediaDto var)
         {
-            _socialMediaService.TUpdate(new SocialMedia()
-            {
-                SocialMediaID = var.SocialMediaID,
-                Icon = var.Icon,
-                Title = var.Title,
-                Url = var.Url
-            });
+            _socialMediaService.TUpdate(_mapper.Map<SocialMedia>(var));
             return Ok("Sosyal medya güncellendi");
         }
     }

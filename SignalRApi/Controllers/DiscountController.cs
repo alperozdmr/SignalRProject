@@ -29,14 +29,7 @@ namespace SignalRApı.Controllers
         [HttpPost]
         public IActionResult CreateDiscount(CreateDiscountDto var)
         {
-            _discountService.TAdd(new Discount()
-            {
-               Amount = var.Amount, 
-               Description = var.Description,
-               ImageUrl = var.ImageUrl,
-               Title = var.Title,
-               Status = var.Status,
-            });
+            _discountService.TAdd(_mapper.Map<Discount>(var));
             return Ok("discount eklendi");
         }
         [HttpDelete("{id}")]
@@ -54,15 +47,8 @@ namespace SignalRApı.Controllers
         [HttpPut]
         public IActionResult UpdateDiscount(UpdateDiscountDto var)
         {
-            _discountService.TUpdate(new Discount()
-            {
-                DiscountID = var.DiscountID,
-                Amount = var.Amount,
-                Description = var.Description,
-                ImageUrl = var.ImageUrl,
-                Title = var.Title,
-                Status = false,    
-            });
+            var.Status = false;
+            _discountService.TUpdate(_mapper.Map<Discount>(var));
             return Ok("discount güncellendi");
         }
         [HttpGet("ChangeStatusToTrue/{id}")]

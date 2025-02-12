@@ -41,11 +41,8 @@ namespace SignalRApı.Controllers
 		[HttpPost]
         public IActionResult CreateCategory(CreateCategoryDto var)
         {
-            _categoryService.TAdd(new Category()
-            {
-                Name = var.Name,
-                Status = true
-            });
+            var.Status = true;
+            _categoryService.TAdd(_mapper.Map<Category>(var));
             return Ok("kategori eklendi");
         }
         //Buraya id yazmamın nedeni webUI dan istek atılınca parametre olarak id yi görmesi 
@@ -61,12 +58,7 @@ namespace SignalRApı.Controllers
         }
         [HttpPut]
         public IActionResult UpdateCategory(UpdateCategoryDto var) {
-            _categoryService.TUpdate(new Category()
-            {
-                CategoryID = var.CategoryID,
-                Name = var.Name,
-                Status = var.Status
-            });
+            _categoryService.TUpdate(_mapper.Map<Category>(var));
             return Ok("kategori güncellendi");
         }  
     }

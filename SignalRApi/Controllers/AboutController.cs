@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DtoLayer.AboutDto;
@@ -11,29 +12,26 @@ namespace SignalRApı.Controllers
     public class AboutController : ControllerBase
     {
         private readonly IAboutService _aboutService;
+        private readonly IMapper _mapper;
 
-        public AboutController(IAboutService aboutService)
-        {
-            _aboutService = aboutService;
-        }
+		public AboutController(IAboutService aboutService, IMapper mapper)
+		{
+			_aboutService = aboutService;
+			_mapper = mapper;
+		}
 
-        [HttpGet]
+		[HttpGet]
         public IActionResult AboutList()
         {
             var values = _aboutService.TGetListAll();
-            return Ok(values);
+            return Ok(_mapper.Map<List<ResultAboutDto>>(values));
         }
         [HttpPost]
         [Route("Add")]
         public IActionResult CreateAbout(CreateAboutDto var)
         {
-            About about = new About
-            {
-                Title = var.Title,
-                Description = var.Description,
-                ImageUrl = var.ImageUrl,
-            };
-            _aboutService.TAdd(about);
+            var value = _mapper.Map<About>(var);
+            _aboutService.TAdd(value);
             return Ok("Hakkında kısmı başarılı bir şekilde eklendi");
         }
         [HttpDelete("{id}")]
@@ -46,21 +44,15 @@ namespace SignalRApı.Controllers
         [HttpPut]
         public IActionResult UpdateAbout(UpdateAboutDto var)
         {
-            About about = new About
-            {
-                AboutID = var.AboutID,
-                Title = var.Title,
-                Description = var.Description,
-                ImageUrl = var.ImageUrl,
-            };
-            _aboutService.TUpdate(about);
+            var value = _mapper.Map<About>(var);
+            _aboutService.TUpdate(value);
             return Ok("Hakkında alanı güncellendi");
         }
         [HttpGet("{id}")]
         public IActionResult GetAbout(int id)
         {
             var value = _aboutService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetAboutDto>(value));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DtoLayer.NotificationDto;
@@ -12,14 +13,17 @@ namespace SignalRApı.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService _notificationService;
+		private readonly IMapper _mapper;
 
-		public NotificationController(INotificationService notificationService)
+		public NotificationController(INotificationService notificationService, IMapper mapper)
 		{
 			_notificationService = notificationService;
+			_mapper = mapper;
 		}
 		[HttpGet]
 		public IActionResult NotificationList() {
-			return Ok(_notificationService.TGetListAll());
+			var values = _notificationService.TGetListAll();
+			return Ok(_mapper.Map<List<ResultNotificationDto>>(values));
 		}
 		[HttpGet("NotificationCountByStatusFalse")]
 		public IActionResult NotificationCountByStatusFalse() {
@@ -53,16 +57,9 @@ namespace SignalRApı.Controllers
 		[HttpPut]
 		public IActionResult UpdateNotification(UpdateNotificationDto var)
 		{
-			Notification Notification = new Notification
-			{
-				NotificationID = var.NotificationID,
-				Icon = var.Icon,
-				Status = var.Status,
-				Type = var.Type,
-				Date = Convert.ToDateTime(DateTime.Now.ToShortDateString()),
-                Description = var.Description,	
-			};
-			_notificationService.TUpdate(Notification);
+			var.Date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+			var value = _mapper.Map<Notification>(var);
+			_notificationService.TUpdate(value);
 			return Ok("Bildirim alanı güncellendi");
 		}
 		[HttpGet("{id}")]
