@@ -64,5 +64,18 @@ namespace SignalRApı.Controllers
             var value = _menuTableService.TGetByID(id);
             return Ok(value);
         }
+        [HttpGet("ChangeMenuTableStatusToTrue")]
+        public IActionResult ChangeMenuTableStatusToTrue(int id)
+        {
+            _menuTableService.TChangeMenuTableStatusToTrue(id);
+            return Ok("İşlem başarılı");
+        }
+
+        [HttpGet("ChangeMenuTableStatusToFalse")]
+        public IActionResult ChangeMenuTableStatusToFalse(int id)
+        {
+            _menuTableService.TChangeMenuTableStatusToFalse(id);
+            return Ok("İşlem başarılı");
+        }
     }
 }

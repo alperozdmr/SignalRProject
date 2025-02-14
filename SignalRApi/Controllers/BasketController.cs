@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccess.Concrete;
 using SignalR.DtoLayer.BasketDto;
+using SignalR.EntityLayer;
 using SignalR.EntityLayer.Entities;
 using SignalRApı.Models;
 
@@ -50,8 +51,8 @@ namespace SignalRApı.Controllers
             {
                 if (product.Count >= 1)
                 {
-                    product.Count++;
-                    product.Price = product.Price * product.Count;
+                    decimal count = product.Count++;
+                    product.TotalPrice = product.Price * count;
                     _basketService.TUpdate(product);
                 }
             }
@@ -60,7 +61,7 @@ namespace SignalRApı.Controllers
                 _basketService.TAdd(new Basket
                 {
                     ProductID = var.ProductID,
-                    MenuTableID = 4,
+                    MenuTableID = var.MenuTableID,
                     Count = 1,
                     Price = context.Products.Where(x => x.ProductID == var.ProductID).Select(y => y.Price).FirstOrDefault(),
                     TotalPrice = (context.Products.Where(x => x.ProductID == var.ProductID).Select(y => y.Price).FirstOrDefault()) * 1,
@@ -73,7 +74,8 @@ namespace SignalRApı.Controllers
             var value = _basketService.TGetByID(id);
             if (value.Count > 1)
             {
-                value.Count--;
+                decimal count = value.Count--;
+                value.TotalPrice = value.Price *count;
                 _basketService.TUpdate(value);
             }
             else

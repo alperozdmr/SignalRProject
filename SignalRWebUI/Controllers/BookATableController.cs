@@ -21,6 +21,7 @@ namespace SignalRWebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(CreateBookingDto var)
         {
+            var.Description = "Rezervasyon Alındı";
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(var);
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -29,7 +30,12 @@ namespace SignalRWebUI.Controllers
             {
                 return RedirectToAction("Index","Default");
             }
-            return View();
+            else
+            {
+                var errorContent = await responseMessage.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, errorContent);
+                return View();
+            }
 
         }
     }

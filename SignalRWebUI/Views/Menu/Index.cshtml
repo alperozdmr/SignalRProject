@@ -46,7 +46,7 @@
                                             <h6>
                                                 @item.Price$
                                             </h6>
-                                            <a href="#" onclick="showproductid(@item.ProductID)">
+                                            <a href="#" onclick="showproductid(@item.ProductID, @ViewBag.v)">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                                 <g>
                                                 <g>
@@ -109,8 +109,8 @@
                 </div>
             </div>
             <div class="btn-box">
-                <a href="/Basket/Index">
-                   Sepete Git
+                <a href="/Basket/Index/@ViewBag.v">
+                    Sepete Git (@ViewBag.v)
                 </a>
             </div>
         </div>
@@ -124,18 +124,36 @@
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
     <!-- End Google Map -->
     <script>
-        function showproductid(value) {
-            var id = value;
+        // function showproductid(value) {
+        //     var id = value;
+        //     $.ajax({
+        //         type: 'POST',
+        //         data: { item:id },
+        //         url: "/Menu/AddBasket/" + id,
+        //         contentType: 'json',
+        //         success: function () {
+        //             swal("Seçilen Ürün ID:" + id, "Seçtiğiniz Ürün Sepete Eklendi!", "success");
+        //         }
+        //     });
+        // }
+        function showproductid(productId, menuTableId) {
             $.ajax({
                 type: 'POST',
-                data: { item:id },
-                url: "/Menu/AddBasket/" + id,
-                contentType: 'json',
+                url: "/Menu/AddBasket",
+                data: {
+                    id: productId,
+                    menuTableId: menuTableId // MenuTableId burada gönderiliyor
+                },
                 success: function () {
-                    swal("Seçilen Ürün ID:" + id, "Seçtiğiniz Ürün Sepete Eklendi!", "success");
+                    swal("Seçilen Ürün ID:" + productId, "Seçtiğiniz Ürün Sepete Eklendi!", "success");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hata:", error);
+                    console.log("Yanıt:", xhr.responseText);
                 }
             });
-        }
+        };
+
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>

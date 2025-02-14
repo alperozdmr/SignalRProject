@@ -1,8 +1,12 @@
+using FluentValidation;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.BusinessLayer.Concrete;
+using SignalR.BusinessLayer.Container;
+using SignalR.BusinessLayer.ValidationRules.BookingValidations;
 using SignalR.DataAccess.Abstract;
 using SignalR.DataAccess.Concrete;
 using SignalR.DataAccess.EntityFramework;
+using SignalR.DtoLayer.BookingDto;
 using SignalRApý.Hubs;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -24,60 +28,10 @@ builder.Services.AddSignalR();
 builder.Services.AddDbContext<SignalRContext>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-builder.Services.AddScoped<IAboutService,AboutManager>();
-builder.Services.AddScoped<IAboutDal,EfAboutDal>();
 
-builder.Services.AddScoped<IBookingService, BookingManager>();
-builder.Services.AddScoped<IBookingDal, EfBookingDal>();
+builder.Services.ContainerDependencies();// Dependecy Ýnjectionlarý çaðýrýyor business layerýndaki
 
-builder.Services.AddScoped<ICategoryService, CategoryManager>();
-builder.Services.AddScoped<ICategorySErvice, EfCategoryDal>();
-
-builder.Services.AddScoped<IContactService, ContactManager>();
-builder.Services.AddScoped<IContactDal, EfContactDal>();
-
-builder.Services.AddScoped<IDiscountService, DiscountManager>();
-builder.Services.AddScoped<IDiscountDal, EfDiscountDal>();
-
-builder.Services.AddScoped<IFeatureService, FeatureManager>();
-builder.Services.AddScoped<IFeatureDal, EfFeatureDal>();
-
-builder.Services.AddScoped<IProductService, ProductManager>();
-builder.Services.AddScoped<IProductDal, EfProductDal>();
-
-builder.Services.AddScoped<ISocialMediaService, SocialMediaManager>();
-builder.Services.AddScoped<ISocialMediaDal, EfSocialMediaDal>();
-
-builder.Services.AddScoped<ITestimonialService, TestimonialManager>();
-builder.Services.AddScoped<ITestimonialDal, EfTestimonialDal>();
-
-builder.Services.AddScoped<IOrderDetailService, OrderDetailManager>();
-builder.Services.AddScoped<IOrderDetailDal, EfOrderDetailDal>();
-
-builder.Services.AddScoped<IOrderService, OrderManager>();
-builder.Services.AddScoped<IOrderDal, EfOrderDal>();
-
-builder.Services.AddScoped<IMoneyCaseService, MoneyCaseManager>();
-builder.Services.AddScoped<IMoneyCaseDal, EfMoneyCaseDal>();
-
-builder.Services.AddScoped<IMenuTableService, MenuTableManager>();
-builder.Services.AddScoped<IMenuTableDal, EfMenuTableDal>();
-
-builder.Services.AddScoped<ISliderService, SliderManager>();
-builder.Services.AddScoped<ISliderDal, EfSliderDal>();
-
-builder.Services.AddScoped<IBasketService, BasketManager>();
-builder.Services.AddScoped<IBasketDal, EfBasketDal>();
-
-builder.Services.AddScoped<INotificationService, NotificationManager>();
-builder.Services.AddScoped<INotificationDal, EfNotificationDal>();
-
-builder.Services.AddScoped<IMessageService, MessageManager>();
-builder.Services.AddScoped<IMessageDal, EfMessageDal>();
-
-
-
-
+builder.Services.AddValidatorsFromAssemblyContaining<CreateBookingValidation>();
 
 builder.Services.AddControllersWithViews()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
