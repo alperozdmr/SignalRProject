@@ -1,5 +1,5 @@
-Bu proje ASP.NET core üzeriden yazılıp code first yaklaşımıyla .NET6 üzerinden yazılmıştır.
-🔹 Kullandığım Teknolojiler
+Bu proje ASP.NET core üzeriden yazılıp code first yaklaşımıyla .NET6 üzerinden yazılmıştır. \n
+🔹 Kullandığım Teknolojiler \n
 🔹 .NET 6
 🔹 ASP.NET Core Web API & MVC 
 🔹 MsSql
